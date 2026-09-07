@@ -1,0 +1,41 @@
+{
+  "cluster": "devnet",
+  "realmsInstance": "kekbull",
+  "rpcUrl": "https://api.devnet.solana.com",
+  "ichorProgram": "iDVeWfx3JRJvs9XrrKDW5FXDsjwtqfnQSThhNMS4oZi",
+  "ichorMint": "DFh21oYa7xnAHD9FiravvvKQExdTteiHaxbyxmPfNUeS",
+  "kekbullMint": "7Y7SvDxXCdEAi7tY3pC7vU4nEAVkmdSoLhDkdMZfcore",
+  "realm": "6EpLSH6mHesrapFcFqZ4fTFWseccuktgz7ESUSzfNKzz",
+  "governance": "4fWr7DmTybiaZ6f17RN5j1mVBcj5HgS3Kyofzcokqdk1",
+  "nativeTreasury": "9EjtY7x4tpsj8YZQQyswyoALkE2T7DPQjT5G7h9g5orF",
+  "communityTokenOwnerRecord": null,
+  "meteoraPool": "7j2b4axegih56SrVy82BaWVFPH3Y8HRLqoLwjFzeFgRd",
+  "meteoraPosition": "7T3cpP1bVRPcXUUXutHpEyGVr61u7CkF1NjZrH5CEkEB",
+  "meteoraPositionNftMint": "DDWityV4ejp89gfkr7FGYYWzacC5dXGYRV3gtjPuHwLM",
+  "expectedLockedLiquidityBaseUnits": "80306411884898193278944",
+  "_proof": {
+    "governanceProgramId": "2uNHeSLiNn6dLLtiGrpCd8UZKBfV36kap57eg9kV39Fj",
+    "governanceUpgradeAuthority": "87iypjzaf4HiFKfqbpHRMqxA7hV2UZPiaFFxuPyUrVAA",
+    "ichorConfig": "4PrXtH1eDsF1Xo5hWSw3nGKzrz9D3XvXzs9pbRzgwDuX",
+    "configAuthority": "5E6eeUqF2UunqwGDavfCgh28smQe88JSN7MXGvCdh4Zd",
+    "ichorUpgradeAuthority": "GsD3DmnPeV6XcnPFMRK2467cLQzeZDtPJA5YMKxua4P5",
+    "realmAuthority": "87iypjzaf4HiFKfqbpHRMqxA7hV2UZPiaFFxuPyUrVAA",
+    "councilMint": "A68QMx8jmSTLus9vAvVdgoztPoNFhbtYxr9sBw1btWhA",
+    "daoDestinationCommitSignature": "4b3J5bjWcdUbsgUvCWFAT5x91G6PqAKSixwGwgCaHxGb2bmkfXFQMTRhg4vVzfTPgsDPzuArKDRSuM2MtUCR6Aw",
+    "communityMintIsIchor": true,
+    "communityVoteTipping": "Disabled",
+    "councilVoteTipping": "Disabled",
+    "baseVotingTime": 300,
+    "paused": false,
+    "feeBeneficiariesBound": true,
+    "labeledGovER5": false,
+    "holderSmokeSafe": true,
+    "holderSmokeBlocker": "none (ICHOR supply 13000000000000; community deposited weight 6982500000000 — not full supply)"
+  },
+  "_abandonedThrowawayProof": {
+    "note": "Prior fork vote proof used throwaway TransferFee community mint; not this product Realm",
+    "realm": "GmizMqtXPM8gUDUdzhgAA1p2HF16q7WKMpoZU1Zqthwh",
+    "governance": "Dc52c73VVfupFkwWynUwPQRx4FZTmwJoQLfN3yoWUacp",
+    "communityVoteTippingAfterExecute": "Strict"
+  }
+}

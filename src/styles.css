@@ -1,0 +1,1784 @@
+/* KEKBULL ICHOR governance - dao.kekbull.com
+   Drop-in replacement for ichor/governance-ui/src/styles.css.
+
+   Written against the class names the existing panels already emit, so
+   Governance.tsx, Burn.tsx, Preflight.tsx, LockAndFees.tsx and TransferFees.tsx
+   get the new look with no changes to their markup.
+
+   Two-token colour code, matching the marketing site:
+     KEKBULL  -> green  #00ff64
+     ICHOR    -> violet #a472e8 / #c0a0f0
+   Gold is structure and labels. Green is never used for an ICHOR quantity. */
+
+/* Self-hosted so the design does not depend on the visitor's OS. The previous
+   stacks named Arial Narrow / Segoe UI / -apple-system and nothing else, which
+   resolve on nobody's Linux box and nobody's Android phone, so every heading
+   fell back to the generic sans. See public/fonts/README.md. */
+@font-face {
+  font-family: "KEK Display";
+  src: url("/fonts/disp-400.woff") format("woff");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "KEK Display";
+  src: url("/fonts/disp-700.woff") format("woff");
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "KEK Body";
+  src: url("/fonts/body-400.woff") format("woff");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "KEK Body";
+  src: url("/fonts/body-600.woff") format("woff");
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "KEK Mono";
+  src: url("/fonts/mono-400.woff") format("woff");
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  --void: #0a0f0a;
+  --panel: #0c110c;
+  --panel-2: #12160f;
+  --panel-ichor: #100c18;
+  --panel-kek: #0b120c;
+  --stone: #1a1d1a;
+
+  --green: #00ff64;
+  --violet: #a472e8;
+  --violet-lt: #c0a0f0;
+  --gold: #c6a04d;
+  --gold-hot: #ffe08a;
+  --danger: #ff5a4a;
+
+  --bone: #f5f2e9;
+  --ink: #c8c4b4;
+  --ink-dim: rgba(200, 196, 180, 0.7);
+
+  --rule: rgba(198, 160, 77, 0.28);
+  --rule-strong: rgba(198, 160, 77, 0.4);
+
+  --disp: "KEK Display", "Arial Narrow", "Liberation Sans Narrow", Impact, sans-serif;
+  --body: "KEK Body", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --mono: "KEK Mono", ui-monospace, "SF Mono", "DejaVu Sans Mono", Menlo, monospace;
+
+  --shell: 1180px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+  background: var(--void);
+  color: var(--ink);
+}
+
+html {
+  scroll-padding-top: 72px;
+}
+
+/* Body copy is a reading font, not the condensed display face. The old sheet
+   set Arial Narrow on everything, which is why long explanations were hard
+   work: condensed type at 16px is for headlines, not paragraphs. */
+body {
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: 0;
+  padding: 0 0 80px;
+  text-wrap: pretty;
+}
+
+#root {
+  max-width: var(--shell);
+  width: 100%;
+  margin: 0 auto;
+}
+
+a {
+  color: var(--green);
+  text-decoration: none;
+}
+
+a:hover {
+  color: #7cffb0;
+}
+
+::selection {
+  background: var(--green);
+  color: var(--void);
+}
+
+/* ---------- headings ---------- */
+
+h1,
+h2,
+h3 {
+  font-family: var(--disp);
+  text-transform: uppercase;
+  color: var(--bone);
+  margin: 0 0 10px;
+  /* 700, not 400. The stack used to resolve to whatever the OS had, so weight
+     was academic; with a real condensed face shipped, the display cut is what
+     gives the headings the weight the marketing site has. */
+  font-weight: 700;
+  line-height: 1.04;
+}
+
+h1 {
+  font-size: clamp(30px, 4vw, 46px);
+  letter-spacing: 0.02em;
+  color: var(--bone);
+}
+
+h2 {
+  font-size: 24px;
+  letter-spacing: 0.02em;
+  color: var(--bone);
+}
+
+h3 {
+  font-size: 20px;
+  letter-spacing: 0.02em;
+}
+
+.kicker {
+  margin: 0 0 8px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.lede {
+  max-width: 72ch;
+  margin: 0 0 26px;
+  font-size: 17px;
+  line-height: 1.6;
+  color: #dcd8cb;
+}
+
+/* ---------- page shell furniture (used by App.tsx) ---------- */
+
+.page-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.page-head img {
+  display: block;
+  flex: 0 0 auto;
+}
+
+.status-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  color: var(--ink-dim);
+  margin: 0 0 26px;
+}
+
+.status-line .live {
+  color: var(--green);
+}
+
+.status-line .sep {
+  color: rgba(200, 196, 180, 0.35);
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 12px 16px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--rule-strong);
+  padding-top: 14px;
+  margin: 44px 0 22px;
+}
+
+.section-head img {
+  display: block;
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+}
+
+.section-head img.kek {
+  border-radius: 50%;
+}
+
+.section-head .k {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.section-head .note {
+  font-size: 14px;
+  color: var(--ink-dim);
+  flex: 1 1 260px;
+  min-width: 0;
+}
+
+/* ---------- panels ---------- */
+
+.banner,
+.panel,
+.gate-fail,
+.gate-pass,
+.blocked {
+  border: 1px solid var(--rule);
+  background: var(--panel);
+  padding: 22px 24px;
+  margin: 0 0 20px;
+}
+
+.panel > *:last-child,
+.banner > *:last-child {
+  margin-bottom: 0;
+}
+
+.banner.critical,
+.gate-fail,
+.blocked {
+  border-color: rgba(255, 90, 74, 0.55);
+  background: rgba(255, 90, 74, 0.06);
+  color: var(--bone);
+}
+
+.banner.critical h2,
+.gate-fail strong,
+.blocked strong {
+  color: var(--danger);
+}
+
+.gate-pass {
+  border-color: rgba(0, 255, 100, 0.35);
+  background: rgba(0, 255, 100, 0.04);
+}
+
+/* ICHOR-denominated panels. Add className="ichor" in the panel that talks
+   about ICHOR supply, deposits, voting weight or transfer fees. */
+.panel.ichor,
+.gate-pass.ichor {
+  border-color: rgba(164, 114, 232, 0.35);
+  background: var(--panel-ichor);
+}
+
+.panel.kek {
+  border-color: rgba(0, 255, 100, 0.3);
+  background: var(--panel-kek);
+}
+
+.panel.quiet {
+  background: var(--panel-2);
+}
+
+.wallet-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wallet-bar > div {
+  flex: 1 1 340px;
+  min-width: 0;
+}
+
+/* ---------- stat strip ---------- */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+  gap: 12px;
+  margin: 0 0 14px;
+}
+
+.stat {
+  background: var(--panel);
+  border: 1px solid rgba(198, 160, 77, 0.25);
+  padding: 18px 20px;
+}
+
+.stat .k {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.stat .k img {
+  display: block;
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+}
+
+.stat .k img.kek {
+  border-radius: 50%;
+}
+
+.stat.ichor .k {
+  color: var(--violet-lt);
+}
+
+.stat.kek .k {
+  color: var(--green);
+}
+
+.stat .v {
+  font-family: var(--mono);
+  font-size: 23px;
+  line-height: 1.1;
+  color: var(--bone);
+  overflow-wrap: anywhere;
+}
+
+.stat .n {
+  margin-top: 6px;
+  font-size: 12px;
+  color: rgba(200, 196, 180, 0.6);
+}
+
+/* Full-width so a long fee note does not stretch the three vault cards. */
+.stat.damm-fees {
+  margin: 0 0 14px;
+}
+
+/* your own figures read as a pair, in ICHOR territory */
+.mine {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 12px;
+  margin: 0 0 44px;
+}
+
+.mine > div {
+  background: var(--panel-ichor);
+  border: 1px solid rgba(164, 114, 232, 0.3);
+  padding: 18px 20px;
+}
+
+.mine.deposit-balances {
+  margin: 14px 0 0;
+}
+
+/* ---------- forms ---------- */
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 16px;
+  align-items: flex-end;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+input,
+select,
+textarea,
+button {
+  font: inherit;
+}
+
+input,
+select,
+textarea {
+  min-width: 16rem;
+  max-width: 100%;
+  background: var(--void);
+  color: var(--bone);
+  border: 1px solid var(--rule-strong);
+  padding: 11px 13px;
+  font-family: var(--mono);
+  font-size: 14px;
+  letter-spacing: 0;
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 1px solid var(--green);
+  outline-offset: 1px;
+}
+
+input:disabled,
+input:read-only,
+input[readonly],
+textarea:disabled,
+textarea:read-only,
+textarea[readonly],
+select:disabled {
+  border-color: rgba(198, 160, 77, 0.22);
+  color: rgba(200, 196, 180, 0.5);
+  cursor: not-allowed;
+  background: rgba(12, 14, 18, 0.55);
+}
+
+textarea {
+  min-height: 5.5rem;
+  width: min(48rem, 100%);
+  line-height: 1.55;
+}
+
+/* Primary action is green. Gold buttons read as chrome, which is why every
+   action on the old page looked equally important. */
+button {
+  min-height: 44px;
+  background: var(--green);
+  color: var(--void);
+  border: 0;
+  padding: 0 20px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: #7cffb0;
+}
+
+button.secondary {
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--rule-strong);
+  font-weight: 400;
+}
+
+button.secondary:hover:not(:disabled) {
+  background: transparent;
+  border-color: var(--gold);
+  color: var(--gold-hot);
+}
+
+button.danger {
+  background: transparent;
+  border: 1px solid rgba(255, 90, 74, 0.6);
+  color: var(--danger);
+  font-weight: 400;
+}
+
+/* Dead state says why, rather than dimming to 45% and leaving the reader to
+   guess. Pair with disabled + a label like "Opens when KEKBULL graduates". */
+button:disabled {
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(198, 160, 77, 0.09) 0 6px,
+    transparent 6px 12px
+  );
+  border: 1px dashed var(--rule-strong);
+  color: rgba(200, 196, 180, 0.65);
+  font-weight: 400;
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+/* Holder collect is the one public fee action. The striped dead style makes
+   it vanish on the dark panel; keep the word Collect readable while closed. */
+button.collect-action:disabled {
+  background: rgba(0, 255, 100, 0.12);
+  border: 1px solid var(--green);
+  color: var(--green);
+  font-weight: 700;
+}
+
+/* ---------- tabs (kept for the operator view) ---------- */
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin: 0 0 22px;
+  border: 1px solid var(--rule-strong);
+  padding: 2px;
+  width: fit-content;
+}
+
+.tabs button {
+  min-height: 36px;
+  padding: 0 14px;
+  background: transparent;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.tabs button:hover:not(:disabled) {
+  background: rgba(198, 160, 77, 0.1);
+  color: var(--bone);
+}
+
+.tabs button[aria-selected="true"] {
+  background: var(--gold);
+  color: var(--void);
+}
+
+/* ---------- data ---------- */
+
+.mono,
+pre,
+code {
+  font-family: var(--mono);
+  letter-spacing: 0;
+}
+
+code {
+  color: var(--green);
+  font-size: 0.92em;
+}
+
+pre {
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin: 10px 0 0;
+  padding: 12px 14px;
+  background: var(--void);
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  font-size: 12.5px;
+  line-height: 1.55;
+  max-height: 22rem;
+  overflow: auto;
+}
+
+.dl {
+  display: grid;
+  grid-template-columns: minmax(8rem, 16rem) 1fr;
+  gap: 0;
+  margin: 14px 0 0;
+  border-top: 1px solid rgba(198, 160, 77, 0.2);
+}
+
+.dl dt,
+.dl dd {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(198, 160, 77, 0.2);
+  min-width: 0;
+}
+
+.dl dt {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  padding-right: 16px;
+}
+
+.dl dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--bone);
+  word-break: break-all;
+}
+
+.dl.prose {
+  grid-template-columns: 1fr;
+}
+
+.dl.prose dt {
+  border-bottom: 0;
+  padding-bottom: 2px;
+}
+
+.dl.prose dd {
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.55;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 620px) {
+  .dl {
+    grid-template-columns: 1fr;
+  }
+
+  .dl dt {
+    border-bottom: 0;
+    padding-bottom: 2px;
+  }
+}
+
+.muted {
+  color: var(--ink);
+  font-size: 15.5px;
+  line-height: 1.6;
+}
+
+p {
+  margin: 0 0 12px;
+  max-width: 78ch;
+}
+
+strong {
+  color: var(--bone);
+  font-weight: 600;
+}
+
+ul.compact {
+  margin: 10px 0 0;
+  padding-left: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+ul.compact li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 15.5px;
+  line-height: 1.55;
+}
+
+ul.compact li::before {
+  content: "·";
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+}
+
+/* pill for a state that is true right now */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 9px;
+  border: 1px solid var(--rule-strong);
+  color: var(--gold);
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.pill.ok {
+  border-color: rgba(0, 255, 100, 0.5);
+  color: var(--green);
+}
+
+.pill.ichor {
+  border-color: rgba(164, 114, 232, 0.5);
+  color: var(--violet-lt);
+}
+
+.pill.bad {
+  border-color: rgba(255, 90, 74, 0.55);
+  color: var(--danger);
+}
+
+.pill.dead {
+  border-style: dashed;
+  color: rgba(200, 196, 180, 0.65);
+}
+
+/* ---------- dialog ---------- */
+
+dialog {
+  border: 1px solid var(--rule-strong);
+  background: var(--panel-2);
+  color: var(--ink);
+  padding: 26px;
+  max-width: 46rem;
+  width: calc(100vw - 32px);
+  font-family: var(--body);
+}
+
+dialog h2 {
+  color: var(--bone);
+}
+
+dialog::backdrop {
+  background: rgba(10, 15, 10, 0.82);
+}
+
+/* ---------- footer ---------- */
+
+footer {
+  margin-top: 56px;
+  border-top: 1px solid var(--rule);
+  padding-top: 22px;
+  color: rgba(200, 196, 180, 0.7);
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+footer .mono {
+  color: var(--bone);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ---------- panel head ---------- */
+
+.panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.panel-head > div:first-child {
+  flex: 1 1 320px;
+  min-width: 0;
+}
+
+.panel-head h2 {
+  margin-bottom: 8px;
+}
+
+.panel-head p {
+  margin-bottom: 0;
+}
+
+.panel-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+}
+
+.read-age {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: rgba(200, 196, 180, 0.55);
+}
+
+.stat .u {
+  font-size: 13px;
+  color: rgba(200, 196, 180, 0.6);
+}
+
+.mine .k {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--violet-lt);
+}
+
+.mine .k img {
+  display: block;
+  flex: 0 0 auto;
+}
+
+.mine .v {
+  font-family: var(--mono);
+  font-size: 23px;
+  line-height: 1.1;
+  color: var(--bone);
+}
+
+.mine .n {
+  margin-top: 8px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: rgba(200, 196, 180, 0.65);
+}
+
+.mine .deposit-record {
+  margin: 16px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid rgba(164, 114, 232, 0.25);
+}
+
+.mine .deposit-record .k {
+  margin-bottom: 8px;
+}
+
+.mine .deposit-record .mono {
+  display: block;
+  word-break: break-all;
+  color: var(--bone);
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+
+.mine .deposit-record a.mono:hover {
+  color: var(--violet-lt);
+}
+
+.mine .deposit-record .n {
+  display: block;
+  margin-top: 8px;
+}
+
+.proposal-body {
+  margin: 14px 0 18px;
+  padding: 16px 18px;
+  background: var(--void);
+  border: 1px solid rgba(198, 160, 77, 0.25);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--bone);
+}
+
+.proposal-body h1,
+.proposal-body h2,
+.proposal-body h3 {
+  margin: 0 0 10px;
+  font-family: var(--disp);
+  color: var(--gold);
+}
+
+.proposal-body p,
+.proposal-body ul,
+.proposal-body ol {
+  margin: 0 0 10px;
+}
+
+.proposal-body a {
+  color: var(--green);
+}
+
+.action-summary {
+  margin: 0 0 18px;
+  padding: 14px 16px;
+  border: 1px solid rgba(0, 255, 100, 0.25);
+  background: rgba(0, 255, 100, 0.04);
+}
+
+.action-summary .k {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.action-summary .v {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.action-summary ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: rgba(200, 196, 180, 0.75);
+  font-size: 13px;
+}
+
+label.check {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: var(--body);
+  font-size: 13px;
+  color: var(--bone);
+}
+
+label.check input {
+  min-width: 0;
+  width: auto;
+}
+
+/* ---------- folds ---------- */
+
+/* The engineering view. Base units, ATAs and authorities are what a reader
+   checking the mechanism needs; they are not the headline. */
+details.raw,
+details.operator {
+  margin-top: 20px;
+  border-top: 1px solid var(--rule);
+  padding-top: 14px;
+}
+
+details.raw > summary,
+details.operator > summary {
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  list-style: none;
+}
+
+details.raw > summary::-webkit-details-marker,
+details.operator > summary::-webkit-details-marker {
+  display: none;
+}
+
+details.raw > summary::before,
+details.operator > summary::before {
+  content: "+ ";
+}
+
+details.raw[open] > summary::before,
+details.operator[open] > summary::before {
+  content: "\2212 ";
+}
+
+details.raw > summary:hover,
+details.operator > summary:hover {
+  color: var(--gold-hot);
+}
+
+details.operator > summary {
+  color: var(--ink-dim);
+}
+
+details.raw > *:not(summary),
+details.operator > *:not(summary) {
+  margin-top: 14px;
+}
+
+/* ---------- burn ---------- */
+
+.burn-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: clamp(20px, 3vw, 40px);
+  align-items: start;
+}
+
+.burn-form label {
+  margin-bottom: 6px;
+}
+
+.burn-form input,
+.burn-form select {
+  width: 100%;
+  min-width: 0;
+}
+
+.burn-form button {
+  width: 100%;
+  margin-top: 6px;
+}
+
+.field-note {
+  margin: 6px 0 18px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(200, 196, 180, 0.65);
+}
+
+.burn-flow .kicker {
+  margin-bottom: 14px;
+}
+
+ol.steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 1px;
+  background: rgba(198, 160, 77, 0.25);
+  border: 1px solid rgba(198, 160, 77, 0.25);
+}
+
+.step {
+  display: flex;
+  gap: 14px;
+  padding: 16px 18px;
+  background: var(--panel-2);
+}
+
+.step .n {
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--rule-strong);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--gold);
+}
+
+.step.kek .n {
+  border-color: rgba(0, 255, 100, 0.5);
+  color: var(--green);
+}
+
+.step.ichor .n {
+  border-color: rgba(164, 114, 232, 0.55);
+  color: var(--violet-lt);
+}
+
+.step-body {
+  min-width: 0;
+}
+
+.step-title {
+  font-size: 14px;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+
+.step-value {
+  font-family: var(--mono);
+  font-size: 20px;
+  line-height: 1.15;
+  color: var(--bone);
+  margin-bottom: 6px;
+}
+
+.step.ichor .step-value {
+  color: var(--violet-lt);
+}
+
+.step-value .u {
+  font-size: 12px;
+  color: rgba(200, 196, 180, 0.6);
+}
+
+.step-value .pending {
+  font-size: 13px;
+  color: rgba(200, 196, 180, 0.5);
+}
+
+.step p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.flow-note {
+  margin-top: 14px;
+  font-size: 13.5px;
+  border-top: 1px solid var(--rule);
+  padding-top: 14px;
+}
+
+/* ---------- fee collect (lives with the live figures) ---------- */
+
+.fee-collect {
+  background: var(--panel-ichor);
+  border: 1px solid rgba(164, 114, 232, 0.35);
+  padding: 20px 22px 16px;
+  margin: 0 0 18px;
+}
+
+.fee-collect h3 {
+  margin: 0 0 6px;
+}
+
+.fee-live-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.fee-live-head h3 {
+  margin: 0 0 6px;
+}
+
+.fee-live .stats {
+  margin-bottom: 16px;
+}
+
+/* ---------- fee split ---------- */
+
+.split-bars {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 18px;
+  max-width: 34rem;
+}
+
+.split-bars .pair {
+  display: grid;
+  gap: 6px;
+}
+
+.split-bars .bar {
+  height: 10px;
+  background: rgba(245, 242, 233, 0.07);
+}
+
+.split-bars .bar i {
+  display: block;
+  height: 100%;
+  background: var(--gold);
+}
+
+.split-bars .bar.alt i {
+  background: var(--violet);
+}
+
+.split-bars span {
+  font-size: 14px;
+}
+
+/* ---------- deposit lifecycle ---------- */
+
+.lifecycle {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 1px;
+  background: rgba(164, 114, 232, 0.25);
+  border: 1px solid rgba(164, 114, 232, 0.25);
+  margin-bottom: 18px;
+}
+
+.lifecycle > div {
+  background: var(--panel-2);
+  padding: 18px 20px;
+}
+
+.lifecycle .k {
+  margin-bottom: 10px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--violet-lt);
+}
+
+.lifecycle p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
+.transfer-preview {
+  border: 1px solid rgba(164, 114, 232, 0.35);
+  background: var(--panel-ichor);
+  padding: 18px 20px;
+  margin-top: 18px;
+  display: grid;
+  gap: 10px;
+}
+
+.transfer-preview > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 16px;
+  border-bottom: 1px solid rgba(198, 160, 77, 0.2);
+  padding-bottom: 8px;
+}
+
+.transfer-preview > div:last-of-type {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.transfer-preview .k {
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.transfer-preview .v {
+  font-family: var(--mono);
+  font-size: 15px;
+  color: var(--bone);
+}
+
+.transfer-preview .v.fee {
+  color: var(--gold);
+}
+
+.transfer-preview .v.net {
+  color: var(--violet-lt);
+}
+
+.transfer-preview p {
+  margin: 0;
+  font-size: 12.5px;
+}
+
+/* ---------- proposals ---------- */
+
+.create-form {
+  border: 1px solid var(--rule-strong);
+  background: var(--panel-2);
+  padding: 22px 24px;
+  margin-bottom: 20px;
+}
+
+.create-form h3 {
+  margin-bottom: 8px;
+}
+
+.create-form label {
+  margin-bottom: 14px;
+}
+
+.create-form input,
+.create-form textarea {
+  width: min(40rem, 100%);
+}
+
+.proposal-open {
+  margin-bottom: 18px;
+}
+
+.proposal-open input {
+  width: min(34rem, 100%);
+}
+
+.proposal-board {
+  margin: 18px 0 22px;
+}
+
+.proposal-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 14px;
+}
+
+.proposal-filters .filter {
+  border: 1px solid var(--rule-strong);
+  background: transparent;
+  color: var(--ink);
+  padding: 6px 12px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.proposal-filters .filter.on {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.proposal-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.proposal-row {
+  width: 100%;
+  text-align: left;
+  border: 1px solid var(--rule);
+  background: var(--panel-2);
+  padding: 14px 16px;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+.proposal-row.selected,
+.proposal-row:hover {
+  border-color: var(--gold);
+}
+
+.proposal-row-title {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.proposal-row-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: center;
+}
+
+.pill.quiet {
+  opacity: 0.75;
+}
+
+.proposal {
+  border: 1px solid var(--rule-strong);
+  background: var(--panel-2);
+  padding: 22px 24px;
+}
+
+.proposal-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin-bottom: 12px;
+}
+
+.proposal-head .id {
+  font-size: 12.5px;
+  color: var(--gold);
+}
+
+.vote-box {
+  border-top: 1px solid var(--rule);
+  margin-top: 16px;
+  padding-top: 16px;
+}
+
+.vote-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.vote-actions button {
+  flex: 1 1 12rem;
+}
+
+.empty {
+  border: 1px dashed var(--rule-strong);
+  background: var(--panel);
+  padding: clamp(28px, 5vw, 48px) 24px;
+  text-align: center;
+  margin: 0 0 20px;
+}
+
+.empty .status-line {
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.empty h3 {
+  margin-bottom: 12px;
+}
+
+.empty p.muted {
+  max-width: 56ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.operator-lock .gate-fail {
+  text-align: left;
+  max-width: 56ch;
+  margin: 16px auto 0;
+}
+
+.operator-lock-connect {
+  display: flex;
+  justify-content: center;
+  margin-top: 22px;
+}
+
+.row.centre {
+  justify-content: center;
+}
+
+.btn-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 22px;
+  border: 1px solid var(--rule-strong);
+  color: var(--gold);
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.btn-link:hover {
+  border-color: var(--gold);
+  color: var(--gold-hot);
+}
+
+.read-lock {
+  margin-top: 18px;
+}
+
+@media (max-width: 620px) {
+  .vote-actions button {
+    flex: 1 1 100%;
+  }
+}
+
+/* ---------- masthead ---------- */
+
+/* Origin, chain-verification status and the wallet were three full-width
+   panels stacked above the fold. Two are statuses and one is a control, so
+   they are chrome. The failure state is NOT here: see Preflight. */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  align-items: center;
+  justify-content: space-between;
+  margin: calc(clamp(20px, 4vw, 44px) * -1) calc(clamp(16px, 4vw, 40px) * -1) 30px;
+  padding: 11px clamp(16px, 4vw, 40px);
+  background: rgba(10, 15, 10, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rule);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.brand img {
+  display: block;
+  flex: 0 0 auto;
+  border-radius: 50%;
+}
+
+.brand .wordmark {
+  font-family: var(--disp);
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--bone);
+}
+
+.brand .brand-sub {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.navlinks {
+  display: flex;
+  gap: 16px;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  white-space: nowrap;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.navlinks::-webkit-scrollbar {
+  display: none;
+}
+
+.navlinks a {
+  color: var(--ink);
+}
+
+.navlinks a:hover {
+  color: var(--bone);
+}
+
+.topbar-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  min-width: 0;
+}
+
+.wallet-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 3px 3px 3px 11px;
+  border: 1px solid var(--rule-strong);
+  min-width: 0;
+}
+
+.wallet-chip .sol {
+  font-size: 12px;
+  color: var(--bone);
+  white-space: nowrap;
+}
+
+/* ---------- wallet adapter ---------- */
+
+/* The adapter ships a purple pill on a green-and-gold page. The component
+   cannot be swapped without losing the Wallet Standard guarantee the tests
+   enforce, so restyle it instead. */
+.wallet-adapter-button,
+.wallet-adapter-button-trigger {
+  min-height: 34px;
+  height: 34px;
+  padding: 0 14px;
+  background: var(--green) !important;
+  background-color: var(--green) !important;
+  color: var(--void) !important;
+  border: 0;
+  border-radius: 0;
+  font-family: var(--body);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 34px;
+}
+
+.wallet-adapter-button:not([disabled]):hover {
+  background: #7cffb0 !important;
+  background-color: #7cffb0 !important;
+  color: var(--void) !important;
+}
+
+.wallet-adapter-button[disabled] {
+  background: var(--stone) !important;
+  color: rgba(200, 196, 180, 0.6) !important;
+  cursor: not-allowed;
+}
+
+.wallet-adapter-button-start-icon,
+.wallet-adapter-button-end-icon {
+  display: none;
+}
+
+.wallet-adapter-modal-wrapper {
+  background: var(--panel-2);
+  border: 1px solid var(--rule-strong);
+  border-radius: 0;
+  font-family: var(--body);
+}
+
+.wallet-adapter-modal-title {
+  font-family: var(--disp);
+  text-transform: uppercase;
+  color: var(--bone);
+}
+
+.wallet-adapter-modal-list li,
+.wallet-adapter-modal-list-more {
+  font-family: var(--body);
+}
+
+.wallet-adapter-modal-button-close {
+  background: var(--stone);
+  border-radius: 0;
+}
+
+@media (max-width: 620px) {
+  .topbar {
+    padding-top: 9px;
+    padding-bottom: 9px;
+  }
+
+  .brand .brand-sub {
+    display: none;
+  }
+
+  .navlinks {
+    order: 3;
+    flex-basis: 100%;
+    padding-bottom: 4px;
+  }
+}
+
+/* DAO state banner. The caution is the one line that can cost a reader money if
+   they miss it, so it is separated rather than folded into the body text. */
+.empty .state-caution {
+  margin-top: 14px;
+  padding-left: 14px;
+  border-left: 2px solid var(--gold, #c6a04d);
+  color: var(--bone, #e8e3d8);
+}
+.empty .state-you-can { margin-top: 14px; }
+.empty .state-you-can strong { color: var(--bone, #e8e3d8); }
+
+/* ── What the DAO owns ─────────────────────────────────────────────────
+   Dressed in the marketing site's plate language: gold hairlines, mono
+   micro-caps, hatching for what is gone. Grouped by spendability, because the
+   question a holder has is what this DAO can DO with its money.
+
+   No combined total: SOL, KEKBULL and ICHOR share no denominator here, and a
+   converted figure would need prices this page does not read. */
+.owns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+.owns-group {
+  position: relative;
+  border: 1px solid rgba(198, 160, 77, 0.25);
+  background: var(--panel);
+  padding: 20px;
+}
+/* Corner bracket, as on the site's specimen plate. */
+.owns-group::before {
+  content: "";
+  position: absolute;
+  inset: 7px auto auto 7px;
+  width: 12px;
+  height: 12px;
+  border-top: 1px solid var(--gold);
+  border-left: 1px solid var(--gold);
+  opacity: .55;
+}
+.owns-group h3 {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 16px;
+  padding-left: 14px;
+}
+.owns-group.locked h3 { color: var(--ink-dim); }
+.owns-group.not-ours { border-style: dashed; }
+.owns-group.not-ours h3 { color: var(--violet-lt); }
+.owns-group ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 20px; }
+.owns-group li { display: grid; gap: 5px; }
+.owns-group .lbl {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(200, 196, 180, .7);
+}
+.owns-group .lbl img { display: block; width: 15px; height: 15px; }
+.owns-group .lbl img.kek { border-radius: 50%; }
+.owns-group .val {
+  font-family: var(--mono);
+  font-size: 30px;
+  line-height: 1.05;
+  color: var(--bone);
+  letter-spacing: -.01em;
+}
+.owns-group .val .u { font-size: 12px; letter-spacing: .12em; color: var(--ink-dim); }
+.owns-group .pending { font-size: 14px; font-family: var(--mono); color: rgba(200, 196, 180, .45); }
+.owns-group .note { font-size: 12px; line-height: 1.5; color: var(--ink-dim); }
+.owns-group .val.locked-word { font-size: 17px; color: var(--gold); letter-spacing: .1em; }
+
+/* Part-to-whole within ONE mint. Emphasis, not categorical: the treasury share
+   is gold, context is grey by lightness, and burned supply is hatched because
+   it is absence, not a quantity someone holds. Gold beside the brand green
+   failed CVD separation as adjacent segments (protan ΔE ~5); grey does not. */
+.supply-bar {
+  margin: 26px 0 0;
+  border: 1px solid rgba(198, 160, 77, .25);
+  background: var(--panel);
+  padding: 20px;
+}
+.supply-bar figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  align-items: baseline;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(200, 196, 180, .7);
+  margin-bottom: 12px;
+}
+.supply-bar figcaption b { color: var(--bone); font-weight: 400; letter-spacing: 0; font-size: 13px; }
+.supply-bar .track {
+  display: flex;
+  gap: 2px;
+  height: 22px;
+  background: rgba(245, 242, 233, .07);
+}
+.supply-bar .seg { display: block; min-width: 2px; }
+.supply-bar .seg.gone {
+  border: 1px solid rgba(214, 58, 58, .55);
+  background: repeating-linear-gradient(45deg, rgba(214, 58, 58, .5) 0 5px, transparent 5px 10px);
+}
+.supply-bar .seg-key { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 9px; }
+.supply-bar .seg-key li {
+  display: grid;
+  grid-template-columns: 11px 1fr auto auto;
+  gap: 11px;
+  align-items: baseline;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .06em;
+}
+.supply-bar .seg-key i { width: 11px; height: 11px; }
+.supply-bar .seg-key i.gone {
+  border: 1px solid rgba(214, 58, 58, .55);
+  background: repeating-linear-gradient(45deg, rgba(214, 58, 58, .5) 0 3px, transparent 3px 6px);
+}
+.supply-bar .seg-key .lbl { color: rgba(200, 196, 180, .7); text-transform: uppercase; }
+.supply-bar .seg-key .val { color: var(--bone); font-size: 12.5px; }
+.supply-bar .seg-key .pc { color: var(--gold); min-width: 4em; text-align: right; }
+.supply-bar .seg-key li.gone .val { text-decoration: line-through; opacity: .75; }
+
+/* Collapsible panel. Succession is reassurance a holder reads once, not a task
+   they return to, so it ships closed rather than sitting open at the page end. */
+.panel.fold > summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 16px;
+}
+.panel.fold > summary::-webkit-details-marker { display: none; }
+.panel.fold > summary h2 { display: inline; margin: 0; }
+.panel.fold > summary::after {
+  content: "+";
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 20px;
+  line-height: 1;
+  color: var(--gold);
+}
+.panel.fold[open] > summary::after { content: "\2212"; }
+.panel.fold > summary .fold-hint {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+.panel.fold[open] > summary { margin-bottom: 18px; }
+.panel.fold > summary:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }

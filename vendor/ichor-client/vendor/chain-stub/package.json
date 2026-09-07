@@ -1,0 +1,6 @@
+{
+  "name": "chain",
+  "version": "0.0.0-kekbull-reviewed-stub",
+  "private": true,
+  "description": "Reviewed local no-op replacement for the ambiguous npm package named `chain`. No scripts. No exports. Any import fails closed."
+}

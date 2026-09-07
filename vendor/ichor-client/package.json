@@ -1,0 +1,33 @@
+{
+  "name": "@kekbull/ichor-client",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Isolated unsigned TypeScript builders for KEKBULL ICHOR Meteora DAMM v2 and Realms v3. No send path. No key material.",
+  "type": "module",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test tests/*.test.ts"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@meteora-ag/cp-amm-sdk": "1.4.6",
+    "@realms-today/spl-governance": "0.3.33",
+    "@solana/spl-token": "0.4.15",
+    "@solana/web3.js": "1.98.4",
+    "bn.js": "5.2.5"
+  },
+  "devDependencies": {
+    "@types/bn.js": "5.2.0",
+    "typescript": "7.0.2"
+  },
+  "overrides": {
+    "chain": "file:./vendor/chain-stub",
+    "axios": "1.19.0"
+  }
+}

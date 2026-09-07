@@ -1,0 +1,18 @@
+{
+  "cluster": "mainnet-beta",
+  "realmsInstance": "kekbull",
+  "rpcUrl": "",
+  "ichorProgram": "DmnfCzQNbx4ZAWEwBoAKqTALgwuUXwYxZL1dRqXoZ1Md",
+  "ichorMint": "61fHeSXmBuJMbqsYKVqgXifJDV8v9zzF7rFpysNT3Mq2",
+  "kekbullMint": "CKFvy16Gd8kadtCmNyu9r91TYgyvrbJnsJey8McFpump",
+  "realm": "EJQ83ay57EH84wmqBk8r1dsqN7PSVmP83mY1DArq7ft9",
+  "governance": "H9hwaXvV5bXGrVRtrbd9n8PUmheAGeA7dDmvmwC45WnC",
+  "nativeTreasury": "Dn2cjgXaHLju8Gc5fRpvHX3AzeKAi3JwSjusPCoAYWGJ",
+  "voteProgram": "2uNHeSLiNn6dLLtiGrpCd8UZKBfV36kap57eg9kV39Fj",
+  "realmName": "KEKBULL DAO",
+  "communityTokenOwnerRecord": null,
+  "meteoraPool": null,
+  "meteoraPosition": null,
+  "meteoraPositionNftMint": null,
+  "expectedLockedLiquidityBaseUnits": null
+}
