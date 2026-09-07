@@ -76,7 +76,7 @@ export function DeploymentFacts(props: {
   }, [cfg.kekbullMint, connection, passed]);
 
   const votingProgram =
-    passed && cfg.realm ? passed.verified.realms.programId.toBase58() : null;
+    passed?.verified.realms.programId.toBase58() ?? cfg.voteProgram;
   const rows: ReadonlyArray<readonly [string, string | null]> = [
     [`${sourceMintLabel(sourceName)} mint`, cfg.kekbullMint],
     ["ICHOR mint", cfg.ichorMint],

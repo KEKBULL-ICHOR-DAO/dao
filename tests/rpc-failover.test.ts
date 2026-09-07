@@ -7,7 +7,7 @@ import {
   shouldFailoverHttpStatus,
   shouldFailoverResponse,
 } from "../src/rpc-failover.ts";
-import { resolveBrowserRpcUrl } from "../src/config.ts";
+import { preflightHasResolvedRpc, resolveBrowserRpcUrl } from "../src/config.ts";
 
 describe("rpc-failover", () => {
   it("fails over 429 / 5xx / missing proxy, not ordinary 400", () => {
@@ -69,6 +69,27 @@ describe("resolveBrowserRpcUrl - named governance /rpc", () => {
     assert.throws(
       () => resolveBrowserRpcUrl("/rpc", "mainnet-beta", "https://evil.tld"),
       /named governance origin or loopback only/,
+    );
+  });
+});
+
+describe("preflightHasResolvedRpc", () => {
+  it("treats empty mainnet rpcUrl as runnable on dao.kekbull.com", () => {
+    assert.equal(preflightHasResolvedRpc("", "mainnet-beta", "https://dao.kekbull.com"), true);
+  });
+
+  it("treats empty rpcUrl as runnable on the official-devnet preview", () => {
+    assert.equal(preflightHasResolvedRpc("", "devnet", "https://devnet.dao.kekbull.com"), true);
+  });
+
+  it("does not auto-run from official-cluster fallback on an unsigned host", () => {
+    assert.equal(preflightHasResolvedRpc("", "mainnet-beta", "https://evil.tld"), false);
+  });
+
+  it("accepts an explicit rpcUrl pin", () => {
+    assert.equal(
+      preflightHasResolvedRpc("https://api.mainnet-beta.solana.com", "mainnet-beta", "https://evil.tld"),
+      true,
     );
   });
 });

@@ -24,7 +24,7 @@ import {
 import { useConnection } from "@solana/wallet-adapter-react";
 import { useEffect, useRef } from "react";
 import type { PublicKey } from "@solana/web3.js";
-import type { DeploymentConfig } from "../config.ts";
+import { preflightHasResolvedRpc, type DeploymentConfig } from "../config.ts";
 import { formatError } from "../format.ts";
 
 type BoundFeePins = {
@@ -347,7 +347,11 @@ export function Preflight(props: {
   // addresses exist, so a not-yet-deployed DAO stays quiet instead of showing
   // a failure the reader cannot act on.
   const canRun =
-    Boolean(props.config.rpcUrl) &&
+    preflightHasResolvedRpc(
+      props.config.rpcUrl,
+      props.config.cluster,
+      typeof window === "undefined" ? "" : window.location.origin,
+    ) &&
     Boolean(props.config.ichorProgram) &&
     Boolean(props.config.realm);
   // Holders (and recovery after a stale issued-proof) set status back to idle

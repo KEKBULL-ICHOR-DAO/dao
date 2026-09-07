@@ -148,6 +148,7 @@ describe("governance-ui source hygiene", () => {
       ichorMint: unknown;
       kekbullMint: unknown;
       realm: unknown;
+      voteProgram: unknown;
       rpcUrl: unknown;
     };
     const mainnetNamed = JSON.parse(read("public/deployment.mainnet.json")) as {
@@ -173,13 +174,14 @@ describe("governance-ui source hygiene", () => {
     assert.equal(published.ichorProgram, "DmnfCzQNbx4ZAWEwBoAKqTALgwuUXwYxZL1dRqXoZ1Md");
     assert.equal(published.ichorMint, "61fHeSXmBuJMbqsYKVqgXifJDV8v9zzF7rFpysNT3Mq2");
     assert.equal(published.kekbullMint, "CKFvy16Gd8kadtCmNyu9r91TYgyvrbJnsJey8McFpump");
-    assert.equal(published.realm, null);
+    assert.equal(published.realm, "EJQ83ay57EH84wmqBk8r1dsqN7PSVmP83mY1DArq7ft9");
+    assert.equal(published.voteProgram, "2uNHeSLiNn6dLLtiGrpCd8UZKBfV36kap57eg9kV39Fj");
     assert.equal(published.rpcUrl, "");
     assert.equal(mainnetNamed.cluster, "mainnet-beta");
     assert.equal(mainnetNamed.ichorProgram, published.ichorProgram);
     assert.equal(mainnetNamed.ichorMint, published.ichorMint);
     assert.equal(mainnetNamed.kekbullMint, published.kekbullMint);
-    assert.equal(mainnetNamed.realm, null);
+    assert.equal(mainnetNamed.realm, published.realm);
     assert.deepEqual(published, JSON.parse(read("public/deployment.mainnet.json")));
     assert.equal(devnetNamed.cluster, "devnet");
     assert.equal(devnetNamed.ichorProgram, fixture.ichorProgram);
@@ -632,6 +634,8 @@ describe("governance-ui source hygiene", () => {
       }
     }
     assert.deepEqual(hits, []);
+    assert.match(preflight, /preflightHasResolvedRpc/);
+    assert.doesNotMatch(preflight, /Boolean\(props\.config\.rpcUrl\)/);
     assert.match(preflight, /verifyIchorProgramDeployment/);
     assert.match(preflight, /verifyIchorConfigDeployment/);
     assert.match(preflight, /verifiedIchorConfig/);

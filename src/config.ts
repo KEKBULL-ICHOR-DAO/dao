@@ -31,6 +31,8 @@ export interface DeploymentConfig {
   readonly realm: string | null;
   readonly governance: string | null;
   readonly nativeTreasury: string | null;
+  /** kekbull_governance program id. Null until D publishes it. */
+  readonly voteProgram: string | null;
   readonly communityTokenOwnerRecord: string | null;
   readonly meteoraPool: string | null;
   readonly meteoraPosition: string | null;
@@ -58,6 +60,7 @@ export const EMPTY_DEPLOYMENT: DeploymentConfig = {
   realm: null,
   governance: null,
   nativeTreasury: null,
+  voteProgram: null,
   communityTokenOwnerRecord: null,
   meteoraPool: null,
   meteoraPosition: null,
@@ -147,6 +150,7 @@ export function parseDeployment(value: unknown): DeploymentConfig {
     realm: optionalPublicKey(rec.realm, "realm"),
     governance: optionalPublicKey(rec.governance, "governance"),
     nativeTreasury: optionalPublicKey(rec.nativeTreasury, "nativeTreasury"),
+    voteProgram: optionalPublicKey(rec.voteProgram, "voteProgram"),
     communityTokenOwnerRecord: optionalPublicKey(
       rec.communityTokenOwnerRecord,
       "communityTokenOwnerRecord",
@@ -225,6 +229,22 @@ export function resolveBrowserRpcUrl(
     throw new Error("relative rpcUrl is a named governance origin or loopback only");
   }
   return `${parsedOrigin.origin}${raw}`;
+}
+
+/**
+ * Holder preflight auto-run. An empty published `rpcUrl` is intentional on
+ * mainnet (same-origin `/rpc`). Do not gate on the raw pin — resolve first.
+ * Official-cluster HTTP fallback alone does not start the check.
+ */
+export function preflightHasResolvedRpc(
+  rpcUrl: string,
+  cluster: UiClusterName,
+  origin: string,
+): boolean {
+  if (rpcUrl.trim().length > 0) {
+    return true;
+  }
+  return resolveBrowserRpcUrl(rpcUrl, cluster, origin).endsWith("/rpc");
 }
 
 const NAMED_GOVERNANCE_HOSTS = new Set<string>([

@@ -16,7 +16,8 @@ export function Succession(props: {
 }) {
   const passed = props.preflight.status === "passed" ? props.preflight : null;
   const clusterLabel = props.config.cluster === "mainnet-beta" ? "mainnet" : "official-devnet";
-  const governanceProgram = passed?.verified.realms.programId.toBase58() ?? null;
+  const governanceProgram =
+    passed?.verified.realms.programId.toBase58() ?? props.config.voteProgram;
   const ichorProgram =
     passed?.verifiedIchorProgram?.programId.toBase58() ?? props.config.ichorProgram;
   const ichorMint =
